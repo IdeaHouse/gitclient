@@ -4,6 +4,7 @@ import com.inder.gitclient.provider.AccountContract;
 import com.inder.gitclient.util.AccountUtils;
 
 import android.accounts.Account;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ public class BaseFragment extends Fragment {
 
     protected LayoutInflater mLayoutInflater;
     protected View mRoot;
+    protected ProgressDialog mProgressDialog;
 
     protected void syncManually(int syncType) {
         if (getActivity() == null) {

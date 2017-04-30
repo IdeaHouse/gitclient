@@ -24,6 +24,8 @@ import android.view.ViewGroup;
 
 public class CommitListFragment extends BaseFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
+    private final int LOADER_COMMIT_LIST = 100;
+    private final String SEARCH_TEXT = "search_text";
     private RecyclerView mCommitListRecyclerView;
     private RecyclerCommitListAdapter mRecyclerCommitListAdapter;
 
@@ -34,6 +36,7 @@ public class CommitListFragment extends BaseFragment
         super.onCreateView(inflater, container, savedInstanceState);
         mRoot = inflater.inflate(R.layout.fragment_commit_list, container, false);
         mCommitListRecyclerView = (RecyclerView) mRoot.findViewById(R.id.commit_list_recycler_view);
+
         syncManually(0);
         return mRoot;
     }
@@ -41,7 +44,7 @@ public class CommitListFragment extends BaseFragment
     @Override
     public void onResume() {
         super.onResume();
-        restartLoader(null, 100);
+        restartLoader(null, LOADER_COMMIT_LIST);
     }
 
     private void restartLoader(Bundle args, int loaderId) {
@@ -51,8 +54,16 @@ public class CommitListFragment extends BaseFragment
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(getContext(), AccountContract.CommitList.CONTENT_URI, null, null,
-                null, null);
+        String searchText = "";
+        if (args != null) {
+            searchText = args.getString(SEARCH_TEXT) == null ? "" : args.getString(SEARCH_TEXT);
+        }
+        String selection = AccountContract.CommitList.COMMIT_LIST_USER_NAME + " LIKE ?";
+        String selectionArgs[] = new String[]{"%" + searchText + "%"};
+
+        return new CursorLoader(getContext(), AccountContract.CommitList.CONTENT_URI, null,
+                selection,
+                selectionArgs, null);
     }
 
     @Override
@@ -79,8 +90,15 @@ public class CommitListFragment extends BaseFragment
         String apiUrl = intent.getStringExtra(NotifyConstants.NOTIFY_API_URL);
         if (apiUrl != null && apiUrl.equals(ApiConstants.GET_GIT_COMMIT_LIST)) {
             if (status == 1) {
-                restartLoader(null, 100);
+                restartLoader(null, LOADER_COMMIT_LIST);
             }
         }
+    }
+
+    public void searchText(String searchText) {
+        Bundle bundle = new Bundle();
+        bundle.putString(SEARCH_TEXT, searchText);
+        restartLoader(bundle, LOADER_COMMIT_LIST);
+
     }
 }

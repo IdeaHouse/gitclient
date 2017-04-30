@@ -55,12 +55,17 @@ public class RecyclerCommitListAdapter
                 .COMMIT_LIST_USER_PIC_URL));
 
         holder.mNameTextView.setText(name);
+        String messageText = mContext.getResources().getString(R
+                .string
+                .commit_message) + message;
 
-        holder.mMessageTextView.setText(mContext.getResources().getString(R.string
-                .commit_message) + message);
+        holder.mMessageTextView.setText(messageText);
 
-        holder.mCommitTextView.setText(mContext.getResources().getString(R.string.commit_id) +
-                commit);
+        String commitIdText = mContext.getResources().getString(R
+                .string
+                .commit_id) +
+                commit;
+        holder.mCommitTextView.setText(commitIdText);
 
         Glide.with(mContext).load(imageUrl).
                 placeholder(R.drawable.ic_account_circle_black_48dp).

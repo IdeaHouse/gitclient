@@ -64,6 +64,7 @@ public class CommitListActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_commit_list, menu);
+        setupSearchView(menu);
         return true;
     }
 
@@ -90,6 +91,14 @@ public class CommitListActivity extends BaseActivity {
         if (mCommitListFragment != null) {
             LOGD(TAG, " broadcast received ");
             mCommitListFragment.onReceiveSyncStatus(intent);
+        }
+    }
+
+    @Override
+    protected void onSearchTextChanged(String searchText) {
+        super.onSearchTextChanged(searchText);
+        if (mCommitListFragment != null) {
+            mCommitListFragment.searchText(searchText);
         }
     }
 }
