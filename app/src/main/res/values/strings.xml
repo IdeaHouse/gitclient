@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Git Client</string>
+    <string name="action_sync">Sync</string>
+    <string name="account_type">com.inder.gitClient</string>
+    <string name="commit_message">Commit Message:</string>
+    <string name="commit_id">Commit Id:</string>
+    <string name="commit_list">Commit List</string>
+</resources>
