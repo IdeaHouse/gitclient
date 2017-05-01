@@ -4,12 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import com.inder.gitclient.provider.AccountContract;
 
-import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
-
-import java.util.ArrayList;
 
 /**
  * Created by inder on 29/4/17.
@@ -75,8 +72,5 @@ public class CommitList extends BaseData {
 
     @Override
     public void saveData(Context context, String syncAccountId) {
-        ArrayList<ContentProviderOperation> batch = new ArrayList<>();
-        batch.add(getContentProviderOperation(syncAccountId));
-        applyBatch(context, batch);
     }
 }
